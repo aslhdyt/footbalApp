@@ -17,7 +17,7 @@ class SoccerEventsByDate(date: String): LiveData<List<Event>>() {
     override fun onActive() {
 
         super.onActive()
-        call.enqueue(object: Callback<LeagueEvent> {
+        if (!call.isExecuted) call.enqueue(object: Callback<LeagueEvent> {
             override fun onResponse(call: Call<LeagueEvent>, response: Response<LeagueEvent>) {
                 value = response.body()?.events
             }

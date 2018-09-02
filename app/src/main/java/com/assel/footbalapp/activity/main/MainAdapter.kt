@@ -10,7 +10,7 @@ import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.item_event.view.*
 import org.jetbrains.anko.backgroundColor
 
-class MainAdapter(val events: List<Event>): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(val events: List<Event>, val onItemClick: (Event)-> Unit): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_event, p0, false))
     }
@@ -31,11 +31,12 @@ class MainAdapter(val events: List<Event>): RecyclerView.Adapter<MainAdapter.Vie
                 itemView.backgroundColor = ContextCompat.getColor(itemView.context, R.color.grey_200)
             else
                 itemView.backgroundColor = ContextCompat.getColor(itemView.context, R.color.white)
+            itemView.setOnClickListener { onItemClick(event) }
             itemView.apply {
                 tvTitle.text = event.strEvent
                 tvTeamHome.text = event.strHomeTeam
                 tvTeamAway.text = event.strAwayTeam
-                tvScore.text = String.format("%s vs %s", event.intHomeScore, event.intAwayScore)
+                tvScore.text = String.format("%s vs %s", event.intHomeScore ?: "", event.intAwayScore ?: "")
             }
 
         }

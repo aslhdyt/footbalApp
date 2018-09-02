@@ -10,15 +10,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.DatePicker
 import com.assel.footbalapp.R
+import com.assel.footbalapp.activity.detail.DetailActivity
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.util.*
 
 
 class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
-    lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,9 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         viewModel.eventsLiveData.observe(this, Observer {
             if (it != null) {
                 val recyclerView = find<RecyclerView>(MainUI.Ids.recyclerView)
-                recyclerView.adapter = MainAdapter(it)
+                recyclerView.adapter = MainAdapter(it) { event ->
+                    startActivity<DetailActivity>("event" to event)
+                }
                 recyclerView.adapter?.notifyDataSetChanged()
             } else {
                 println("null events")
@@ -63,7 +67,8 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     }
 
     override fun onDateSet(datePicker: DatePicker, year: Int, month: Int, day: Int) {
-        val strDate = "$year-$month-$day"
+        val strDate = "$year-${month+1}-$day"
+        println("date: $strDate")
         viewModel.currentSelectedTime.postValue(strDate)
     }
 }
