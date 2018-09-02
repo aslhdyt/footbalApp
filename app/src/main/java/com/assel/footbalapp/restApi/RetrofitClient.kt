@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 object RetrofitClient {
 
 
-    private val BASE_URL = "https://www.thesportsdb.com/api/v1/json/1"
+    private val BASE_URL = "https://www.thesportsdb.com/api/v1/json/1/"
 
     fun getInstance(): Retrofit {
         return retrofit2.Retrofit.Builder()

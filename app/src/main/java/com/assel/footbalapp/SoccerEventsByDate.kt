@@ -9,19 +9,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MatchLD: LiveData<List<Event>>() {
+class SoccerEventsByDate(date: String): LiveData<List<Event>>() {
+    private val call = RetrofitClient.getInstance()
+            .create(Endpoint::class.java).getSoccerEventsByDate(date)
+
+
     override fun onActive() {
 
         super.onActive()
-        val api = RetrofitClient.getInstance()
-        val call = api.create(Endpoint::class.java).getEventsByLeagueId(4328)
         call.enqueue(object: Callback<LeagueEvent> {
             override fun onResponse(call: Call<LeagueEvent>, response: Response<LeagueEvent>) {
-                if (response.isSuccessful) {
-                    value = response.body()?.events
-                }else {
-                    value = null
-                }
+                value = response.body()?.events
             }
 
             override fun onFailure(call: Call<LeagueEvent>, t: Throwable) {
@@ -29,5 +27,10 @@ class MatchLD: LiveData<List<Event>>() {
                 value = null
             }
         })
+    }
+
+    override fun onInactive() {
+        if (call.isExecuted) call.cancel()
+        super.onInactive()
     }
 }
