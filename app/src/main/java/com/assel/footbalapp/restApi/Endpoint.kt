@@ -8,8 +8,12 @@ import retrofit2.http.Query
 
 interface Endpoint {
 
-    @GET("eventsday.php?s=Soccer")
-    fun getSoccerEventsByDate(@Query("d") d: String) : Call<Events>
+    @GET("eventsnextleague.php?id=4328")
+    fun nextEventLeague() : Call<Events>
+
+
+    @GET("eventspastleague.php?id=4328")
+    fun lastEventLeague() : Call<Events>
 
     @GET("lookupteam.php")
     fun getTeamDetailsById(@Query("id") id: Int): Call<Teams>

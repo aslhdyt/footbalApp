@@ -9,9 +9,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SoccerEventsLD(date: String): LiveData<List<Event>>() {
-    private val call = RetrofitClient.getInstance()
-            .create(Endpoint::class.java).getSoccerEventsByDate(date)
+class LeagueEventLD(isNextEvent: Boolean): LiveData<List<Event>>() {
+    private val call = {
+        val client = RetrofitClient.getInstance().create(Endpoint::class.java)
+        if (isNextEvent) client.nextEventLeague()
+        else client.lastEventLeague()
+    } ()
 
 
     override fun onActive() {

@@ -1,75 +1,42 @@
 package com.assel.footbalapp.activity.main
 
-import android.app.DatePickerDialog
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.DatePicker
-import com.assel.footbalapp.AppConstant
-import com.assel.footbalapp.R
-import com.assel.footbalapp.activity.detail.DetailActivity
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
-import java.util.*
 
 
-class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MainUI().setContentView(this)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-
-
-        viewModel.eventsLiveData.observe(this, Observer {
-            if (it != null) {
-                val recyclerView = find<RecyclerView>(MainUI.Ids.recyclerView)
-                recyclerView.adapter = MainAdapter(it) { event ->
-                    startActivity<DetailActivity>(AppConstant.EXTRA_EVENT to event)
-                }
-                recyclerView.adapter?.notifyDataSetChanged()
-            } else {
-                println("null events")
-            }
-        })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menuDate) {
-            toast("Pick events date").show()
-            val currentTime = viewModel.currentSelectedTime.value
-            val calendar = Calendar.getInstance().apply {
-                val formatDate = viewModel.dateFormat.parse(currentTime)
-                time = formatDate
-            }
-            val newFragment = DatePickerFragment.newInstance(calendar)
-            newFragment.show(supportFragmentManager, "datePicker")
-            return true
+        val tabLayout = find<TabLayout>(MainUI.Ids.tabLayout).apply {
+            addTab(newTab().setText("Last Event"))
+            addTab(newTab().setText("Next Event"))
+            tabGravity = TabLayout.GRAVITY_FILL
         }
 
-        return super.onOptionsItemSelected(item)
-    }
 
-    override fun onDateSet(datePicker: DatePicker, year: Int, month: Int, day: Int) {
-        val strDate = "$year-${month+1}-$day"
-        println("date: $strDate")
-        viewModel.currentSelectedTime.postValue(strDate)
+        val viewPager = find<ViewPager>(MainUI.Ids.viewPager)
+        viewPager.adapter = TabFragment.Adapter(supportFragmentManager, tabLayout.tabCount)
+
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        tabLayout.addOnTabSelectedListener( object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewPager.currentItem = tab?.position ?: 0
+            }
+
+        })
+
     }
 }

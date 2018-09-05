@@ -10,7 +10,7 @@ import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.item_event.view.*
 import org.jetbrains.anko.backgroundColor
 
-class MainAdapter(val events: List<Event>, val onItemClick: (Event)-> Unit): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainRecyclerAdapter(var events: List<Event>, val onItemClick: (Event)-> Unit): RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_event, p0, false))
     }
@@ -21,7 +21,6 @@ class MainAdapter(val events: List<Event>, val onItemClick: (Event)-> Unit): Rec
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.bind(p1)
-
     }
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
