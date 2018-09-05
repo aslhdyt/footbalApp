@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.DatePicker
+import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.detail.DetailActivity
 import org.jetbrains.anko.find
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
             if (it != null) {
                 val recyclerView = find<RecyclerView>(MainUI.Ids.recyclerView)
                 recyclerView.adapter = MainAdapter(it) { event ->
-                    startActivity<DetailActivity>("event" to event)
+                    startActivity<DetailActivity>(AppConstant.EXTRA_EVENT to event)
                 }
                 recyclerView.adapter?.notifyDataSetChanged()
             } else {
