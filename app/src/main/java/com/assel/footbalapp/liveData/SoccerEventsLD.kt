@@ -1,4 +1,4 @@
-package com.assel.footbalapp
+package com.assel.footbalapp.liveData
 
 import android.arch.lifecycle.LiveData
 import com.assel.footbalapp.model.Event
@@ -9,13 +9,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SoccerEventsByDate(date: String): LiveData<List<Event>>() {
+class SoccerEventsLD(date: String): LiveData<List<Event>>() {
     private val call = RetrofitClient.getInstance()
             .create(Endpoint::class.java).getSoccerEventsByDate(date)
 
 
     override fun onActive() {
-
         super.onActive()
         if (!call.isExecuted) call.enqueue(object: Callback<Events> {
             override fun onResponse(call: Call<Events>, response: Response<Events>) {
