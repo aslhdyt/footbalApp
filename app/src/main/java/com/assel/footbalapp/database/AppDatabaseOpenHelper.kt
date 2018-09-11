@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.db.*
 
 
-class AppDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 1) {
+class AppDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 2) {
 
     companion object {
         private var instance: AppDatabaseOpenHelper? = null
@@ -22,8 +22,7 @@ class AppDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favori
     override fun onCreate(db: SQLiteDatabase) {
         // Here you create tables
         db.createTable(DatabaseConst.TABLE_FAVOURITE, true,
-                DatabaseConst.DB_ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                DatabaseConst.EVENT_ID to INTEGER + UNIQUE)
+                DatabaseConst.EVENT_ID to INTEGER + PRIMARY_KEY + UNIQUE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

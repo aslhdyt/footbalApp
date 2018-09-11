@@ -1,6 +1,5 @@
 package com.assel.footbalapp.liveData
 
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.content.Context
 import com.assel.footbalapp.activity.main.MainViewModel
@@ -17,9 +16,8 @@ class FavouriteLD(val context: Context, val viewModel: MainViewModel): LiveData<
             select(DatabaseConst.TABLE_FAVOURITE).exec {
                 val dataList = arrayListOf<Event>()
                 while (this.moveToNext()) {
-                    val dbId = getInt(getColumnIndexOrThrow(DatabaseConst.DB_ID))
                     val eventId = getInt(getColumnIndexOrThrow(DatabaseConst.EVENT_ID))
-                    println("dbId: $dbId, eventId: $eventId")
+                    println("eventId: $eventId")
 
                     val data = viewModel.lastEvent.value?.firstOrNull { it.idEvent?.toIntOrNull() == eventId } ?:
                     viewModel.nextEvent.value?.firstOrNull {it.idEvent?.toIntOrNull() == eventId } ?:

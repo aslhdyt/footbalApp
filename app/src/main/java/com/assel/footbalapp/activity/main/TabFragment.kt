@@ -43,7 +43,7 @@ class TabFragment: Fragment() {
             when (eventType) {
                 TYPE_LAST_EVENT -> viewModel.lastEvent.observe(this@TabFragment, observer)
                 TYPE_NEXT_EVENT -> viewModel.nextEvent.observe(this@TabFragment, observer)
-                TYPE_FAVOURITE -> viewModel.favouriteEvent.observe(this@TabFragment, observer) //TODO("create favo liveData")
+                TYPE_FAVOURITE -> viewModel.favouriteEvent.observe(this@TabFragment, observer)
             }
         }
     }
