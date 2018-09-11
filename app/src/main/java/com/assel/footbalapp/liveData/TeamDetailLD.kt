@@ -4,13 +4,13 @@ import android.arch.lifecycle.LiveData
 import com.assel.footbalapp.model.Team
 import com.assel.footbalapp.model.Teams
 import com.assel.footbalapp.restApi.Endpoint
-import com.assel.footbalapp.restApi.RetrofitClient
+import com.assel.footbalapp.restApi.RestClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class TeamDetailLD(id:Int): LiveData<Team>() {
-    private val call = RetrofitClient.getInstance()
+    private val call = RestClient.getInstance()
             .create(Endpoint::class.java).getTeamDetailsById(id)
     override fun onActive() {
         super.onActive()

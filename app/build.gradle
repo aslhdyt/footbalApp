@@ -24,6 +24,10 @@ android {
 androidExtensions {
     experimental = true
 }
+
+
+ext.support_version = "27.1.1"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -45,6 +49,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
     implementation "org.jetbrains.anko:anko-support-v4:$anko_version"
     implementation "org.jetbrains.anko:anko-design:$anko_version"
+    implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
 
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

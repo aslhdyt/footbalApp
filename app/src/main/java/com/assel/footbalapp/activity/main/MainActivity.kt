@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         val tabLayout = find<TabLayout>(MainUI.Ids.tabLayout).apply {
             addTab(newTab().setText("Last Event"))
             addTab(newTab().setText("Next Event"))
+            addTab(newTab().setText("Favourite"))
             tabGravity = TabLayout.GRAVITY_FILL
         }
 
@@ -35,7 +36,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewPager.currentItem = tab?.position ?: 0
             }
-
         })
 
     }

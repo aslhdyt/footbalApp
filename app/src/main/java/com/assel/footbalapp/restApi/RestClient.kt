@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 
 
 
-object RetrofitClient {
+object RestClient {
 
 
     private val BASE_URL = "https://www.thesportsdb.com/api/v1/json/1/"

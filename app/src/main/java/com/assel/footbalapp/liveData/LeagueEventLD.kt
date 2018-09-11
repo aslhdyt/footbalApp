@@ -4,14 +4,14 @@ import android.arch.lifecycle.LiveData
 import com.assel.footbalapp.model.Event
 import com.assel.footbalapp.model.Events
 import com.assel.footbalapp.restApi.Endpoint
-import com.assel.footbalapp.restApi.RetrofitClient
+import com.assel.footbalapp.restApi.RestClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LeagueEventLD(isNextEvent: Boolean): LiveData<List<Event>>() {
     private val call = {
-        val client = RetrofitClient.getInstance().create(Endpoint::class.java)
+        val client = RestClient.getInstance().create(Endpoint::class.java)
         if (isNextEvent) client.nextEventLeague()
         else client.lastEventLeague()
     } ()

@@ -1,11 +1,12 @@
 package com.assel.footbalapp.activity.main
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
+import com.assel.footbalapp.liveData.FavouriteLD
 import com.assel.footbalapp.liveData.LeagueEventLD
-import com.assel.footbalapp.model.Event
 
-class MainViewModel: ViewModel() {
-    var nextEvent: LiveData<List<Event>> = LeagueEventLD(true)
-    var lastEvent: LiveData<List<Event>> = LeagueEventLD(false)
+class MainViewModel(application: Application): AndroidViewModel(application) {
+    var nextEvent = LeagueEventLD(true)
+    var lastEvent = LeagueEventLD(false)
+    var favouriteEvent = FavouriteLD(application, this)
 }

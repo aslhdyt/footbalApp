@@ -25,45 +25,51 @@ class TabFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.recycler_layout, container, false).also {
-
-        }
-
-        view.recyclerView.layoutManager = LinearLayoutManager(context)
-        view.recyclerView.adapter = MainRecyclerAdapter(listOf()) { event ->
-            startActivity<DetailActivity>(AppConstant.EXTRA_EVENT to event)
-        }
-        val observer = Observer<List<Event>> {
-            if (it != null) {
-                val adapter = view.recyclerView.adapter as MainRecyclerAdapter
-                adapter.events = it
-                adapter.notifyDataSetChanged()
-            } else {
-                println("null events")
+        return inflater.inflate(R.layout.recycler_layout, container, false).apply {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = MainRecyclerAdapter(listOf()) { event ->
+                startActivity<DetailActivity>(AppConstant.EXTRA_EVENT to event)
+            }
+            val observer = Observer<List<Event>> {
+                if (it != null) {
+                    val adapter = recyclerView.adapter as MainRecyclerAdapter
+                    adapter.events = it
+                    adapter.notifyDataSetChanged()
+                } else {
+                    println("null events")
+                }
+            }
+            val eventType = arguments?.getInt("event") ?: throw NullPointerException()
+            when (eventType) {
+                TYPE_LAST_EVENT -> viewModel.lastEvent.observe(this@TabFragment, observer)
+                TYPE_NEXT_EVENT -> viewModel.nextEvent.observe(this@TabFragment, observer)
+                TYPE_FAVOURITE -> viewModel.favouriteEvent.observe(this@TabFragment, observer) //TODO("create favo liveData")
             }
         }
-        val isNextEvent = arguments?.getBoolean("event") ?: throw NullPointerException()
-        if (isNextEvent) viewModel.nextEvent.observe(this@TabFragment, observer)
-        else  viewModel.lastEvent.observe(this@TabFragment, observer)
-        return view
     }
 
     companion object {
-        fun newInstance(isNextEvent: Boolean): TabFragment {
+        fun newInstance(eventType: Int): TabFragment {
             val args = Bundle()
-            args.putBoolean("event", isNextEvent)
+            args.putInt("event", eventType)
             val fragment = TabFragment()
             fragment.arguments = args
             return fragment
         }
+
+        const val TYPE_LAST_EVENT = 0
+        const val TYPE_NEXT_EVENT = 1
+        const val TYPE_FAVOURITE = 2
     }
     class Adapter(fragmentManager: FragmentManager, private val tabCount: Int): FragmentStatePagerAdapter(fragmentManager) {
         override fun getItem(position: Int) = when (position) {
-            0 -> TabFragment.newInstance(false)
-            1 -> TabFragment.newInstance(true)
+            TYPE_LAST_EVENT -> TabFragment.newInstance(TYPE_LAST_EVENT)
+            TYPE_NEXT_EVENT -> TabFragment.newInstance(TYPE_NEXT_EVENT)
+            TYPE_FAVOURITE -> TabFragment.newInstance(TYPE_FAVOURITE)
             else -> throw NullPointerException()
         }
 
         override fun getCount() = tabCount
     }
+
 }
