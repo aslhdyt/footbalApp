@@ -7,5 +7,3 @@ class App: Application() {
     val idlingResource =  CountingIdlingResource("app loading")
 }
 
-val Application.idlingResource: CountingIdlingResource
-    get() { return (this as App).idlingResource }

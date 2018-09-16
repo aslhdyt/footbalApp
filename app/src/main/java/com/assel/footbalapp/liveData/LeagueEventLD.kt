@@ -19,18 +19,23 @@ class LeagueEventLD(val application: App, isNextEvent: Boolean): LiveData<List<E
 
 
     override fun onActive() {
-        application.idlingResource.increment()
         super.onActive()
-        if (!call.isExecuted) call.enqueue(object: Callback<Events> {
-            override fun onResponse(call: Call<Events>, response: Response<Events>) {
-                value = response.body()?.events
-            }
+        if (!call.isExecuted) {
+            application.idlingResource.increment()
+            call.enqueue(object: Callback<Events> {
+                override fun onResponse(call: Call<Events>, response: Response<Events>) {
+                    value = response.body()?.events
+                    application.idlingResource.decrement()
+                }
 
-            override fun onFailure(call: Call<Events>, t: Throwable) {
-                t.printStackTrace()
-                value = null
-            }
-        })
+                override fun onFailure(call: Call<Events>, t: Throwable) {
+                    t.printStackTrace()
+                    value = null
+                    application.idlingResource.decrement()
+                }
+            })
+
+        }
     }
 
     override fun onInactive() {

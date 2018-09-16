@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.detail.DetailActivity
-import com.assel.footbalapp.idlingResource
 import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.recycler_layout.view.*
 import org.jetbrains.anko.support.v4.startActivity
@@ -42,7 +41,6 @@ class TabFragment: Fragment() {
                 } else {
                     println("null events")
                 }
-                activity?.application?.idlingResource?.decrement()
             }
             val eventType = arguments?.getInt("event") ?: throw NullPointerException()
             when (eventType) {

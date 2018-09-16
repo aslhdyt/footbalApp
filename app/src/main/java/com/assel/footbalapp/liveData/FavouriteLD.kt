@@ -36,6 +36,7 @@ class FavouriteLD(val application: App, val viewModel: MainViewModel): LiveData<
                     if (data != null) dataList.add(data)
                 }
                 value = dataList.toList()
+                application.idlingResource.decrement()
             }
         }
     }

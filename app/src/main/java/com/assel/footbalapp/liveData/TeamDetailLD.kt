@@ -18,11 +18,13 @@ class TeamDetailLD(val application: App, id:Int): LiveData<Team>() {
         if (!call.isExecuted) call.enqueue(object: Callback<Teams> {
             override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
                 value = response.body()?.teams?.get(0)
+                application.idlingResource.decrement()
             }
 
             override fun onFailure(call: Call<Teams>, t: Throwable) {
                 t.printStackTrace()
                 value = null
+                application.idlingResource.decrement()
             }
         })
     }
@@ -30,6 +32,5 @@ class TeamDetailLD(val application: App, id:Int): LiveData<Team>() {
     override fun onInactive() {
         super.onInactive()
         if (call.isExecuted) call.cancel()
-        application.idlingResource.decrement()
     }
 }

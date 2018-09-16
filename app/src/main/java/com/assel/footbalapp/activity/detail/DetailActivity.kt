@@ -7,8 +7,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.assel.footbalapp.App
 import com.assel.footbalapp.R
-import com.assel.footbalapp.idlingResource
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.toast
@@ -32,13 +32,11 @@ class DetailActivity : AppCompatActivity() {
             if (it != null) {
                 Picasso.get().load(it.strTeamBadge).into(ivHome)
             }
-            application.idlingResource.decrement()
         })
         viewModel.awayTeam.observe(this, Observer {
             if (it != null) {
                 Picasso.get().load(it.strTeamBadge).into(ivAway)
             }
-            application.idlingResource.decrement()
         })
 
 
@@ -61,6 +59,7 @@ class DetailActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.favourite -> {
+                (application as App).idlingResource.increment()
                 viewModel.toggleFavourite {
                     if (it) {
                         viewModel.isFavourite.postValue(true)
@@ -69,6 +68,7 @@ class DetailActivity : AppCompatActivity() {
                         viewModel.isFavourite.postValue(false)
                         toast("Deleted from favourite").show()
                     }
+                    (application as App).idlingResource.decrement()
                 }
                 true
             }
@@ -76,7 +76,4 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

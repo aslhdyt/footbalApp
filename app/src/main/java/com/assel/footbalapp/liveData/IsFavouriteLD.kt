@@ -11,12 +11,14 @@ import org.jetbrains.anko.db.select
 class IsFavouriteLD(val application: App, val eventId: Int): MutableLiveData<Boolean>() {
     val database = application.applicationContext.database
     override fun onActive() {
+        application.idlingResource.increment()
         database.use {
             select(DatabaseConst.TABLE_FAVOURITE, DatabaseConst.EVENT_ID)
                     .whereArgs("(${DatabaseConst.EVENT_ID} = {id})","id" to eventId)
                     .exec {
                         val result = parseOpt(IntParser) ?: -1
                         value = result != -1
+                        application.idlingResource.decrement()
                     }
         }
     }
