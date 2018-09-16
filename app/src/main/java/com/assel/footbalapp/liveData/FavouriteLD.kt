@@ -1,7 +1,7 @@
 package com.assel.footbalapp.liveData
 
 import android.arch.lifecycle.LiveData
-import android.content.Context
+import com.assel.footbalapp.App
 import com.assel.footbalapp.activity.main.MainViewModel
 import com.assel.footbalapp.database.DatabaseConst
 import com.assel.footbalapp.database.database
@@ -10,8 +10,10 @@ import com.assel.footbalapp.restApi.Endpoint
 import com.assel.footbalapp.restApi.RestClient
 import org.jetbrains.anko.db.select
 
-class FavouriteLD(val context: Context, val viewModel: MainViewModel): LiveData<List<Event>>() {
+class FavouriteLD(val application: App, val viewModel: MainViewModel): LiveData<List<Event>>() {
+    val context = application.applicationContext
     override fun onActive() {
+        application.idlingResource.increment()
         context.database.use {
             select(DatabaseConst.TABLE_FAVOURITE).exec {
                 val dataList = arrayListOf<Event>()

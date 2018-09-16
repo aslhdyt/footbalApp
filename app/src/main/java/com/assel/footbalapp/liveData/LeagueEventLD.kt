@@ -1,6 +1,7 @@
 package com.assel.footbalapp.liveData
 
 import android.arch.lifecycle.LiveData
+import com.assel.footbalapp.App
 import com.assel.footbalapp.model.Event
 import com.assel.footbalapp.model.Events
 import com.assel.footbalapp.restApi.Endpoint
@@ -9,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LeagueEventLD(isNextEvent: Boolean): LiveData<List<Event>>() {
+class LeagueEventLD(val application: App, isNextEvent: Boolean): LiveData<List<Event>>() {
     private val call = {
         val client = RestClient.getInstance().create(Endpoint::class.java)
         if (isNextEvent) client.nextEventLeague()
@@ -18,6 +19,7 @@ class LeagueEventLD(isNextEvent: Boolean): LiveData<List<Event>>() {
 
 
     override fun onActive() {
+        application.idlingResource.increment()
         super.onActive()
         if (!call.isExecuted) call.enqueue(object: Callback<Events> {
             override fun onResponse(call: Call<Events>, response: Response<Events>) {
