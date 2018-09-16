@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
+import com.assel.footbalapp.App
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.database.DatabaseConst
 import com.assel.footbalapp.database.database
@@ -16,10 +17,9 @@ import org.jetbrains.anko.db.replaceOrThrow
 
 class DetailViewModel(application: Application, intent: Intent): AndroidViewModel(application) {
     val event = intent.getParcelableExtra<Event>(AppConstant.EXTRA_EVENT)
-    val homeTeam = TeamDetailLD(event.idHomeTeam ?: -1)
-    val awayTeam = TeamDetailLD(event.idAwayTeam ?: -1)
-
-    val isFavourite = IsFavouriteLD(application.database, event.idEvent?.toInt() ?: -1)
+    val homeTeam = TeamDetailLD(application as App, event.idHomeTeam ?: -1)
+    val awayTeam = TeamDetailLD(application as App, event.idAwayTeam ?: -1)
+    val isFavourite = IsFavouriteLD(application as App, event.idEvent?.toInt() ?: -1)
 
     fun toggleFavourite(callback: (isAdded:Boolean) -> Unit) {
         val eventId = event.idEvent?.toIntOrNull()

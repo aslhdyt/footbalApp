@@ -3,13 +3,12 @@ package com.assel.footbalapp.activity.detail
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.assel.footbalapp.App
 import com.assel.footbalapp.R
+import com.assel.footbalapp.idlingResource
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.toast
@@ -17,12 +16,10 @@ import org.jetbrains.anko.toast
 
 class DetailActivity : AppCompatActivity() {
 
-    lateinit var viewModel: DetailViewModel
-    lateinit var idlingResource: CountingIdlingResource
+    private lateinit var viewModel: DetailViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        idlingResource = (application as App).idlingResource
         viewModel = ViewModelProviders.of(this, DetailViewModel.Factory(application, intent)).get(DetailViewModel::class.java)
 
         tvEventDate.text = viewModel.event.dateEvent
@@ -31,19 +28,17 @@ class DetailActivity : AppCompatActivity() {
 
         tvVs.text = "${viewModel.event.intHomeScore ?: ""} VS ${viewModel.event.intAwayScore?: ""}"
 
-        idlingResource.increment()
         viewModel.homeTeam.observe(this, Observer {
             if (it != null) {
                 Picasso.get().load(it.strTeamBadge).into(ivHome)
             }
-            idlingResource.decrement()
+            application.idlingResource.decrement()
         })
-        idlingResource.increment()
         viewModel.awayTeam.observe(this, Observer {
             if (it != null) {
                 Picasso.get().load(it.strTeamBadge).into(ivAway)
             }
-            idlingResource.decrement()
+            application.idlingResource.decrement()
         })
 
 
@@ -51,7 +46,6 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.favourite, menu)
-        idlingResource.increment()
         viewModel.isFavourite.observe(this, Observer {
             val item = menu.findItem(R.id.favourite)
             if (it == true) {
@@ -59,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
             } else {
                 item.icon = ContextCompat.getDrawable(this, android.R.drawable.star_big_off)
             }
-            idlingResource.decrement()
+            application.idlingResource.decrement()
         })
         return true
     }
@@ -68,7 +62,7 @@ class DetailActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.favourite -> {
-                idlingResource.increment()
+                application.idlingResource.increment()
                 viewModel.toggleFavourite {
                     if (it) {
                         viewModel.isFavourite.postValue(true)
@@ -82,5 +76,9 @@ class DetailActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

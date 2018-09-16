@@ -3,7 +3,6 @@ package com.assel.footbalapp.activity.main
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
-import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
@@ -14,6 +13,7 @@ import android.view.ViewGroup
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.detail.DetailActivity
+import com.assel.footbalapp.idlingResource
 import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.recycler_layout.view.*
 import org.jetbrains.anko.support.v4.startActivity
@@ -22,12 +22,10 @@ class TabFragment: Fragment() {
 
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var idlingResource: CountingIdlingResource
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         context as MainActivity
         viewModel = context.viewModel
-        idlingResource = context.idlingResource
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,7 +42,7 @@ class TabFragment: Fragment() {
                 } else {
                     println("null events")
                 }
-                idlingResource.decrement()
+                activity?.application?.idlingResource?.decrement()
             }
             val eventType = arguments?.getInt("event") ?: throw NullPointerException()
             when (eventType) {

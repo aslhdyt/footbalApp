@@ -3,10 +3,8 @@ package com.assel.footbalapp.activity.main
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.test.espresso.idling.CountingIdlingResource
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import com.assel.footbalapp.App
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
 
@@ -14,12 +12,10 @@ import org.jetbrains.anko.setContentView
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: MainViewModel
-    lateinit var idlingResource: CountingIdlingResource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MainUI().setContentView(this)
-        idlingResource = (application as App).idlingResource
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val tabLayout = find<TabLayout>(MainUI.Ids.tabLayout).apply {
             addTab(newTab().setText("Last Event"))
@@ -27,7 +23,6 @@ class MainActivity : AppCompatActivity() {
             addTab(newTab().setText("Favourite"))
             tabGravity = TabLayout.GRAVITY_FILL
         }
-
 
         val viewPager = find<ViewPager>(MainUI.Ids.viewPager)
         viewPager.adapter = TabFragment.Adapter(supportFragmentManager, tabLayout.tabCount)
