@@ -53,7 +53,6 @@ class DetailActivity : AppCompatActivity() {
             } else {
                 item.icon = ContextCompat.getDrawable(this, android.R.drawable.star_big_off)
             }
-            application.idlingResource.decrement()
         })
         return true
     }
@@ -62,7 +61,6 @@ class DetailActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.favourite -> {
-                application.idlingResource.increment()
                 viewModel.toggleFavourite {
                     if (it) {
                         viewModel.isFavourite.postValue(true)
