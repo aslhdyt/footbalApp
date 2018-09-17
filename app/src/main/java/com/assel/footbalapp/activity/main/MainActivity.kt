@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        
 //        val tabLayout = find<TabLayout>(MainUI.Ids.tabLayout).apply {
 //            addTab(newTab().setText("Last Event"))
 //            addTab(newTab().setText("Next Event"))
