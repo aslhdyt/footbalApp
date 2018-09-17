@@ -7,4 +7,8 @@ data class League(
         @SerializedName("strLeague") val strLeague: String?,
         @SerializedName("strSport") val strSport: String?,
         @SerializedName("strLeagueAlternate") val strLeagueAlternate: String?
-)
+) {
+    override fun toString(): String {
+        return strLeague ?: "-"
+    }
+}

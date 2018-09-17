@@ -13,10 +13,9 @@ class LeagueLD(application: App): AppLiveData<List<League>?>(application) {
     override fun onActive() {
         super.onActive()
         if (!call.isExecuted) {
-            application.idlingResource.increment()
             call.enqueue(object: Callback<Leagues> {
                 override fun onResponse(call: Call<Leagues>, response: Response<Leagues>) {
-                    value = response.body()?.leagues
+                    value = response.body()?.leagues?.filter { it.strSport == "Soccer" }
                 }
 
                 override fun onFailure(call: Call<Leagues>, t: Throwable) {

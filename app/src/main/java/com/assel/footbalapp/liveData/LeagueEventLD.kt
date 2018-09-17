@@ -10,11 +10,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LeagueEventLD(val application: App, isNextEvent: Boolean): LiveData<List<Event>>() {
+class LeagueEventLD(val application: App, isNextEvent: Boolean, id: Int): LiveData<List<Event>>() {
     private val call = {
         val client = RestClient.getInstance().create(Endpoint::class.java)
-        if (isNextEvent) client.nextEventLeague()
-        else client.lastEventLeague()
+        if (isNextEvent) client.nextEventLeague(id)
+        else client.lastEventLeague(id)
     } ()
 
 

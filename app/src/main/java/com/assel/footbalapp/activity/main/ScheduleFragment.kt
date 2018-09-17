@@ -5,17 +5,15 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.assel.footbalapp.AppConstant
+import android.widget.ArrayAdapter
 import com.assel.footbalapp.R
-import com.assel.footbalapp.activity.detail.DetailActivity
-import com.assel.footbalapp.model.Event
-import kotlinx.android.synthetic.main.recycler_layout.view.*
+import com.assel.footbalapp.model.League
 import kotlinx.android.synthetic.main.tab_layout.view.*
-import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
+import org.jetbrains.anko.support.v4.toast
 
 class ScheduleFragment: Fragment() {
 
@@ -29,6 +27,19 @@ class ScheduleFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.tab_layout, container, false).apply {
+            viewModel.allLeague.observe(this@ScheduleFragment, Observer {leagues ->
+                spinner.adapter = ArrayAdapter<League>(context, android.R.layout.simple_dropdown_item_1line, leagues)
+                        .apply {
+                            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        }
+                spinner.onItemSelectedListener {
+                    onItemSelected { adapterView, view, i, l ->
+                        val selected = leagues?.get(i)
+                        viewModel.currentSelectedLegue.postValue(selected?.idLeague?.toIntOrNull() ?: 0)
+                    }
+                }
+            })
+
             viewPager.adapter = TabPagerAdapter(childFragmentManager, tabLayout.tabCount)
 
             viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
