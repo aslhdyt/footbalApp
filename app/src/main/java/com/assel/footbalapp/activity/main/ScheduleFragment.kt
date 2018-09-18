@@ -1,5 +1,6 @@
 package com.assel.footbalapp.activity.main
 
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +14,6 @@ import com.assel.footbalapp.R
 import com.assel.footbalapp.model.League
 import kotlinx.android.synthetic.main.tab_layout.view.*
 import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
-import org.jetbrains.anko.support.v4.toast
 
 class ScheduleFragment: Fragment() {
 
@@ -36,8 +36,21 @@ class ScheduleFragment: Fragment() {
                     onItemSelected { adapterView, view, i, l ->
                         val selected = leagues?.get(i)
                         viewModel.currentSelectedLegue.postValue(selected?.idLeague?.toIntOrNull() ?: 0)
+                        progressBar.visibility = View.VISIBLE
                     }
                 }
+                val isLoadedAll = MediatorLiveData<Boolean>()
+                isLoadedAll.addSource(viewModel.lastEvent) { lastEvent ->
+                    val nextEvent = viewModel.nextEvent.value
+                    isLoadedAll.value = nextEvent != null && lastEvent != null
+                }
+                isLoadedAll.addSource(viewModel.nextEvent) { nextEvent ->
+                    val lastEvent = viewModel.lastEvent.value
+                    isLoadedAll.value = nextEvent != null && lastEvent != null
+                }
+                isLoadedAll.observe(this@ScheduleFragment, Observer {
+                    if (it == true) progressBar.visibility = View.GONE
+                })
             })
 
             viewPager.adapter = TabPagerAdapter(childFragmentManager, tabLayout.tabCount)
