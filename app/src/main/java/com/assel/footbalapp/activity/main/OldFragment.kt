@@ -44,7 +44,7 @@ class OldFragment: Fragment() {
             when (eventType) {
                 TYPE_LAST_EVENT -> viewModel.lastEvent.observe(this@OldFragment, observer)
                 TYPE_NEXT_EVENT -> viewModel.nextEvent.observe(this@OldFragment, observer)
-//                TYPE_FAVOURITE -> viewModel.favouriteEvent.observe(this@OldFragment, observer)
+                TYPE_FAVOURITE -> viewModel.favouriteEvent.observe(this@OldFragment, observer)
             }
         }
     }

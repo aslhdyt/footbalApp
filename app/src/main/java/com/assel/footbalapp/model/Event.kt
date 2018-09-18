@@ -1,12 +1,16 @@
 package com.assel.footbalapp.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity
 data class Event(
-        @SerializedName("idEvent") val idEvent: String?,
+        @PrimaryKey
+        @SerializedName("idEvent") val idEvent: String,
         @SerializedName("idSoccerXML") val idSoccerXML: String?,
         @SerializedName("strEvent") val strEvent: String?,
         @SerializedName("strFilename") val strFilename: String?,

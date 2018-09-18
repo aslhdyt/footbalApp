@@ -46,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.favourite, menu)
         viewModel.isFavourite.observe(this, Observer {
             val item = menu.findItem(R.id.favourite)
-            if (it == true) {
+            if (it != null) {
                 item.icon = ContextCompat.getDrawable(this, android.R.drawable.star_big_on)
             } else {
                 item.icon = ContextCompat.getDrawable(this, android.R.drawable.star_big_off)
@@ -62,10 +62,8 @@ class DetailActivity : AppCompatActivity() {
                 (application as App).idlingResource.increment()
                 viewModel.toggleFavourite {
                     if (it) {
-                        viewModel.isFavourite.postValue(true)
                         toast("Added to favourite").show()
                     }else {
-                        viewModel.isFavourite.postValue(false)
                         toast("Deleted from favourite").show()
                     }
                     (application as App).idlingResource.decrement()

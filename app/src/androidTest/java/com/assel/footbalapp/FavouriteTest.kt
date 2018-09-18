@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.assel.footbalapp.activity.main.MainActivity
 import com.assel.footbalapp.activity.main.MainRecyclerAdapter
-import com.assel.footbalapp.database.DatabaseConst
 import com.assel.footbalapp.database.database
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -23,7 +22,6 @@ import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.IsInstanceOf
-import org.jetbrains.anko.db.delete
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
