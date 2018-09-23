@@ -16,7 +16,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         viewModel = ViewModelProviders.of(this, SearchViewModel.Factory(application, intent)).get(SearchViewModel::class.java)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

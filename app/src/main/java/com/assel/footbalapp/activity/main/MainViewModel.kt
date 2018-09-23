@@ -8,7 +8,9 @@ import com.assel.footbalapp.App
 import com.assel.footbalapp.database.FootballDatabase
 import com.assel.footbalapp.liveData.LeagueEventLD
 import com.assel.footbalapp.liveData.LeagueLD
+import com.assel.footbalapp.liveData.LeagueTeamLD
 import com.assel.footbalapp.model.Event
+import com.assel.footbalapp.model.Team
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
     val db = FootballDatabase.getInstance(application).dao()
@@ -22,5 +24,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     var lastEvent = Transformations.switchMap<Int, List<Event>>(currentSelectedLegue) {
         LeagueEventLD(application as App, false, it)
     }
+
+    val team = Transformations.switchMap<Int, List<Team>>(currentSelectedLegue) {
+        LeagueTeamLD(application as App, it)
+    }
+
     val favouriteEvent = db.selectAllEvent()
 }

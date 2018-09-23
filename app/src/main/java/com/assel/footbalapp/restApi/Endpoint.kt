@@ -25,4 +25,7 @@ interface Endpoint {
     @GET("all_leagues.php?")
     fun getAllLeague(): Call<Leagues>
 
+    @GET("lookup_all_teams.php")
+    fun getTeamsByLeagueId(@Query("id") id:Int): Call<Teams>
+
 }

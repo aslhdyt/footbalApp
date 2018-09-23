@@ -7,7 +7,7 @@ class PagerAdapter(fragmentManager: FragmentManager, private val tabCount: Int):
 
     override fun getItem(position: Int) = when (position) {
         0 -> ScheduleFragment()
-        1 -> OldFragment.newInstance(OldFragment.TYPE_NEXT_EVENT)
+        1 -> TeamFragment()
         2 -> OldFragment.newInstance(OldFragment.TYPE_FAVOURITE)
         else -> throw NullPointerException()
     }
