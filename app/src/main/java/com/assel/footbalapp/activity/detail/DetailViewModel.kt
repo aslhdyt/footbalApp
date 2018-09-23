@@ -12,7 +12,7 @@ import com.assel.footbalapp.liveData.TeamDetailLD
 import com.assel.footbalapp.model.Event
 import org.jetbrains.anko.doAsync
 
-class DetailViewModel(application: Application, intent: Intent): AndroidViewModel(application) {
+class DetailViewModel(intent: Intent, application: Application): AndroidViewModel(application) {
     val db = FootballDatabase.getInstance(application).dao()
     val event = intent.getParcelableExtra<Event>(AppConstant.EXTRA_EVENT)
     val homeTeam = TeamDetailLD(application as App, event.idHomeTeam ?: -1)
@@ -33,9 +33,12 @@ class DetailViewModel(application: Application, intent: Intent): AndroidViewMode
 
     }
 
+
     class Factory(private val application: Application, private val intent: Intent): ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return DetailViewModel(application, intent) as T
+            return DetailViewModel(intent, application) as T
         }
     }
+
+
 }

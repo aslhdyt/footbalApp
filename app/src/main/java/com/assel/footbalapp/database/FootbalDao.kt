@@ -21,4 +21,6 @@ interface FootbalDao {
     @Query("SELECT * FROM Event WHERE idEvent = :idEvent")
     fun selectEventById(idEvent: Int) : LiveData<Event?>
 
+
+
 }

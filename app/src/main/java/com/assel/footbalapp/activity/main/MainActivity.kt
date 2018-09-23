@@ -3,8 +3,12 @@ package com.assel.footbalapp.activity.main
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
+import com.assel.footbalapp.activity.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,24 +31,21 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        
-//        val tabLayout = find<TabLayout>(MainUI.Ids.tabLayout).apply {
-//            addTab(newTab().setText("Last Event"))
-//            addTab(newTab().setText("Next Event"))
-//            addTab(newTab().setText("Favourite"))
-//            tabGravity = TabLayout.GRAVITY_FILL
-//        }
 
-//        val viewPager = find<ViewPager>(MainUI.Ids.viewPager)
-//        viewPager.adapter = TabFragment.Adapter(supportFragmentManager, tabLayout.tabCount)
-//
-//        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-//        tabLayout.addOnTabSelectedListener( object : TabLayout.OnTabSelectedListener {
-//            override fun onTabReselected(tab: TabLayout.Tab?) {}
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                viewPager.currentItem = tab?.position ?: 0
-//            }
-//        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main,menu)
+        val menuItem = menu.findItem(R.id.search)
+        menuItem.setOnMenuItemClickListener {
+            val currentPage = when (pager.currentItem) {
+                0 -> AppConstant.PAGE_SCHEDULE
+                1 -> AppConstant.PAGE_TEAMS
+                else -> -1
+            }
+            startActivity<SearchActivity>(AppConstant.EXTRA_SEARCH to currentPage)
+            true
+        }
+        return true
     }
 }
