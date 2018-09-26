@@ -40,17 +40,13 @@ class TeamFragment : Fragment() {
                             progressBar.visibility = View.VISIBLE
                         }
                     }
-                    val isLoadedAll = MediatorLiveData<Boolean>()
-                    isLoadedAll.addSource(viewModel.lastEvent) { lastEvent ->
-                        val nextEvent = viewModel.nextEvent.value
-                        isLoadedAll.value = nextEvent != null && lastEvent != null
-                    }
-                    isLoadedAll.addSource(viewModel.nextEvent) { nextEvent ->
-                        val lastEvent = viewModel.lastEvent.value
-                        isLoadedAll.value = nextEvent != null && lastEvent != null
-                    }
-                    isLoadedAll.observe(this@TeamFragment, Observer {
-                        if (it == true) progressBar.visibility = View.GONE
+                    viewModel.team.observe(this@TeamFragment, Observer {
+                        if (it != null) {
+                            progressBar.visibility = View.GONE
+                            //TODO load teams recycler
+                        } else {
+                            //TODO no data
+                        }
                     })
                 } else {
                     toast("No network").show()

@@ -29,15 +29,25 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_favourite -> 2
                 else -> 0
             }
+            //hide search button
+            if (it.itemId == R.id.action_favourite) {
+                hideMenuFlag = true
+                invalidateOptionsMenu()
+            } else if (hideMenuFlag) {
+                hideMenuFlag = false
+                invalidateOptionsMenu()
+            }
+
             true
         }
 
     }
-
+    var hideMenuFlag = false
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (hideMenuFlag) return true
         menuInflater.inflate(R.menu.menu_main,menu)
-        val menuItem = menu.findItem(R.id.search)
-        menuItem.setOnMenuItemClickListener {
+        val searchIcon = menu.findItem(R.id.search)
+        searchIcon.setOnMenuItemClickListener {
             val currentPage = when (pager.currentItem) {
                 0 -> AppConstant.PAGE_SCHEDULE
                 1 -> AppConstant.PAGE_TEAMS
@@ -46,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             startActivity<SearchActivity>(AppConstant.EXTRA_SEARCH to currentPage)
             true
         }
+        searchIcon.isVisible = !hideMenuFlag
         return true
     }
 }

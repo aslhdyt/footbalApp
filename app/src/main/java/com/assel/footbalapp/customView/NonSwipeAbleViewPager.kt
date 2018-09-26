@@ -1,4 +1,4 @@
-package com.assel.footbalapp.view
+package com.assel.footbalapp.customView
 
 import android.content.Context
 import android.support.v4.view.ViewPager

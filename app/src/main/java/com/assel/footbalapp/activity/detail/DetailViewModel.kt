@@ -32,13 +32,4 @@ class DetailViewModel(intent: Intent, application: Application): AndroidViewMode
         }
 
     }
-
-
-    class Factory(private val application: Application, private val intent: Intent): ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return DetailViewModel(intent, application) as T
-        }
-    }
-
-
 }

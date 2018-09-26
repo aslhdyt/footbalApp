@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.assel.footbalapp.App
+import com.assel.footbalapp.IntentVmFactory
 import com.assel.footbalapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -19,7 +20,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        viewModel = ViewModelProviders.of(this, DetailViewModel.Factory(application, intent)).get(DetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, IntentVmFactory(application, intent)).get(DetailViewModel::class.java)
 
         tvEventDate.text = viewModel.event.dateEvent
         tvHomeName.text = viewModel.event.strHomeTeam

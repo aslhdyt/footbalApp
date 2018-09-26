@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav" />
 
-    <com.assel.footbalapp.view.NonSwipeableViewPager
+    <com.assel.footbalapp.customView.NonSwipeableViewPager
         android:id="@+id/pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
