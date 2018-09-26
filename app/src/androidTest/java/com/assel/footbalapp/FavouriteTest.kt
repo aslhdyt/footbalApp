@@ -14,7 +14,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.view.ViewGroup
 import com.assel.footbalapp.activity.main.MainActivity
-import com.assel.footbalapp.activity.main.MainRecyclerAdapter
+import com.assel.footbalapp.activity.main.schedule.ScheduleRecyclerAdapter
 import com.assel.footbalapp.database.database
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -76,7 +76,7 @@ class FavouriteTest {
                         isDisplayed()))
 
         onView(allOf(withId(R.id.recyclerView), isDisplayed()))
-                .perform(RecyclerViewActions.actionOnItemAtPosition<MainRecyclerAdapter.ViewHolder>(0, click()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<ScheduleRecyclerAdapter.ViewHolder>(0, click()))
 
         onView(
                 allOf(withId(R.id.ivAway),

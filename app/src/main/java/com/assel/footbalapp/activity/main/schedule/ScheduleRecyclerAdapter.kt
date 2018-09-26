@@ -1,4 +1,4 @@
-package com.assel.footbalapp.activity.main
+package com.assel.footbalapp.activity.main.schedule
 
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -10,7 +10,7 @@ import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.item_event.view.*
 import org.jetbrains.anko.backgroundColor
 
-class MainRecyclerAdapter(var events: List<Event>, val onItemClick: (Event)-> Unit): RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
+class ScheduleRecyclerAdapter(var events: List<Event>, val onItemClick: (Event)-> Unit): RecyclerView.Adapter<ScheduleRecyclerAdapter.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_event, p0, false))
     }

@@ -12,9 +12,8 @@ import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.detail.DetailActivity
 import com.assel.footbalapp.activity.main.MainActivity
-import com.assel.footbalapp.activity.main.MainRecyclerAdapter
 import com.assel.footbalapp.activity.main.MainViewModel
-import com.assel.footbalapp.activity.main.OldFragment
+import com.assel.footbalapp.activity.main.favourite.FavouriteFragment
 import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.recycler_layout.view.*
 import org.jetbrains.anko.support.v4.startActivity
@@ -32,12 +31,12 @@ class RecyclerFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.recycler_layout, container, false).apply {
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.adapter = MainRecyclerAdapter(listOf()) { event ->
+            recyclerView.adapter = ScheduleRecyclerAdapter(listOf()) { event ->
                 startActivity<DetailActivity>(AppConstant.EXTRA_EVENT to event)
             }
             val observer = Observer<List<Event>> {
                 if (it != null) {
-                    val adapter = recyclerView.adapter as MainRecyclerAdapter
+                    val adapter = recyclerView.adapter as ScheduleRecyclerAdapter
                     adapter.events = it
                     adapter.notifyDataSetChanged()
                 } else {
@@ -53,10 +52,10 @@ class RecyclerFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance(eventType: Int): OldFragment {
+        fun newInstance(eventType: Int): FavouriteFragment {
             val args = Bundle()
             args.putInt("event", eventType)
-            val fragment = OldFragment()
+            val fragment = FavouriteFragment()
             fragment.arguments = args
             return fragment
         }
