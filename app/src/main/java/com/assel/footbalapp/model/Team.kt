@@ -1,7 +1,10 @@
 package com.assel.footbalapp.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Team(
         @SerializedName("idTeam") val idTeam: String?,
         @SerializedName("idSoccerXML") val idSoccerXML: String?,
@@ -53,4 +56,4 @@ data class Team(
         @SerializedName("strTeamBanner") val strTeamBanner: String?,
         @SerializedName("strYoutube") val strYoutube: String?,
         @SerializedName("strLocked") val strLocked: String?
-)
+): Parcelable

@@ -1,9 +1,7 @@
-package com.assel.footbalapp.activity.detail
+package com.assel.footbalapp.activity.scheduleDetail
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
 import com.assel.footbalapp.App
 import com.assel.footbalapp.AppConstant
@@ -12,7 +10,7 @@ import com.assel.footbalapp.liveData.TeamDetailLD
 import com.assel.footbalapp.model.Event
 import org.jetbrains.anko.doAsync
 
-class DetailViewModel(intent: Intent, application: Application): AndroidViewModel(application) {
+class ScheduleDetailViewModel(intent: Intent, application: Application): AndroidViewModel(application) {
     val db = FootballDatabase.getInstance(application).dao()
     val event = intent.getParcelableExtra<Event>(AppConstant.EXTRA_EVENT)
     val homeTeam = TeamDetailLD(application as App, event.idHomeTeam ?: -1)

@@ -9,12 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.main.MainActivity
 import com.assel.footbalapp.activity.main.MainViewModel
+import com.assel.footbalapp.activity.teamDetail.TeamDetailActivity
 import com.assel.footbalapp.model.League
 import kotlinx.android.synthetic.main.team_layout.view.*
 import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 class TeamFragment : Fragment() {
@@ -30,7 +33,7 @@ class TeamFragment : Fragment() {
         return inflater.inflate(R.layout.team_layout, container, false).apply {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = TeamRecylerAdapter(listOf()) { team ->
-                toast("team: ${team.strTeam}").show()
+                startActivity<TeamDetailActivity>(AppConstant.EXTRA_TEAM to team)
             }
             viewModel.allLeague.observe(this@TeamFragment, Observer { leagues->
                 if (leagues?.isNotEmpty() == true) {

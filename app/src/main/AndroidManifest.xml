@@ -19,8 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.detail.DetailActivity" />
-        <activity android:name=".activity.search.SearchActivity"></activity>
+        <activity android:name=".activity.scheduleDetail.ScheduleDetailActivity" />
+        <activity android:name=".activity.search.SearchActivity" />
+        <activity android:name=".activity.teamDetail.TeamDetailActivity"></activity>
     </application>
 
 </manifest>

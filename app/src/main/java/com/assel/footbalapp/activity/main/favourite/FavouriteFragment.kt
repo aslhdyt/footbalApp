@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
-import com.assel.footbalapp.activity.detail.DetailActivity
+import com.assel.footbalapp.activity.scheduleDetail.ScheduleDetailActivity
 import com.assel.footbalapp.activity.main.MainActivity
 import com.assel.footbalapp.activity.main.MainViewModel
 import com.assel.footbalapp.activity.main.schedule.ScheduleRecyclerAdapter
@@ -32,7 +32,7 @@ class FavouriteFragment: Fragment() {
         return inflater.inflate(R.layout.recycler_layout, container, false).apply {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = ScheduleRecyclerAdapter(listOf()) { event ->
-                startActivity<DetailActivity>(AppConstant.EXTRA_EVENT to event)
+                startActivity<ScheduleDetailActivity>(AppConstant.EXTRA_EVENT to event)
             }
             val observer = Observer<List<Event>> {
                 if (it != null) {
