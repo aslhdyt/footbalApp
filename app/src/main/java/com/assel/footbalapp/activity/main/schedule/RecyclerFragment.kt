@@ -1,4 +1,4 @@
-package com.assel.footbalapp.activity.main
+package com.assel.footbalapp.activity.main.schedule
 
 import android.arch.lifecycle.Observer
 import android.content.Context
@@ -11,6 +11,10 @@ import android.view.ViewGroup
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.detail.DetailActivity
+import com.assel.footbalapp.activity.main.MainActivity
+import com.assel.footbalapp.activity.main.MainRecyclerAdapter
+import com.assel.footbalapp.activity.main.MainViewModel
+import com.assel.footbalapp.activity.main.OldFragment
 import com.assel.footbalapp.model.Event
 import kotlinx.android.synthetic.main.recycler_layout.view.*
 import org.jetbrains.anko.support.v4.startActivity

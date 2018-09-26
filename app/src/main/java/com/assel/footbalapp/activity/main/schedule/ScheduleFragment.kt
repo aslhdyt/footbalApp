@@ -1,4 +1,4 @@
-package com.assel.footbalapp.activity.main
+package com.assel.footbalapp.activity.main.schedule
 
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Observer
@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.assel.footbalapp.R
+import com.assel.footbalapp.activity.main.MainActivity
+import com.assel.footbalapp.activity.main.MainViewModel
 import com.assel.footbalapp.model.League
 import kotlinx.android.synthetic.main.tab_layout.view.*
 import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
@@ -35,7 +37,7 @@ class ScheduleFragment: Fragment() {
                             }
                     spinner.onItemSelectedListener {
                         onItemSelected { adapterView, view, i, l ->
-                            val selected = leagues.get(i)
+                            val selected = leagues[i]
                             viewModel.currentSelectedLegue.postValue(selected.idLeague?.toIntOrNull() ?: 0)
                             progressBar.visibility = View.VISIBLE
                         }
@@ -57,7 +59,7 @@ class ScheduleFragment: Fragment() {
                 }
             })
 
-            viewPager.adapter = TabPagerAdapter(childFragmentManager, tabLayout.tabCount)
+            viewPager.adapter = SchedulePagerAdapter(childFragmentManager, tabLayout.tabCount)
 
             viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
             tabLayout.addOnTabSelectedListener( object : TabLayout.OnTabSelectedListener {
@@ -67,15 +69,6 @@ class ScheduleFragment: Fragment() {
                     viewPager.currentItem = tab?.position ?: 0
                 }
             })
-        }
-    }
-
-    companion object {
-        fun newInstance(): OldFragment {
-            val args = Bundle()
-            val fragment = OldFragment()
-            fragment.arguments = args
-            return fragment
         }
     }
 

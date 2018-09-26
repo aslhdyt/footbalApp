@@ -1,15 +1,17 @@
-package com.assel.footbalapp.activity.main
+package com.assel.footbalapp.activity.main.team
 
-import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.assel.footbalapp.R
+import com.assel.footbalapp.activity.main.MainActivity
+import com.assel.footbalapp.activity.main.MainViewModel
 import com.assel.footbalapp.model.League
 import kotlinx.android.synthetic.main.team_layout.view.*
 import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
@@ -26,6 +28,10 @@ class TeamFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.team_layout, container, false).apply {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = TeamRecylerAdapter(listOf()) { team ->
+                toast("team: ${team.strTeam}").show()
+            }
             viewModel.allLeague.observe(this@TeamFragment, Observer { leagues->
                 if (leagues?.isNotEmpty() == true) {
                     spinner.adapter = ArrayAdapter<League>(context, android.R.layout.simple_dropdown_item_1line, leagues)
@@ -35,15 +41,17 @@ class TeamFragment : Fragment() {
 
                     spinner.onItemSelectedListener {
                         onItemSelected { adapterView, view, i, l ->
-                            val selected = leagues.get(i)
-                            viewModel.currentSelectedLegue.postValue(selected.idLeague?.toIntOrNull() ?: 0)
                             progressBar.visibility = View.VISIBLE
+                            val selected = leagues[i]
+                            viewModel.currentSelectedLegue.postValue(selected.idLeague?.toIntOrNull() ?: 0)
                         }
                     }
                     viewModel.team.observe(this@TeamFragment, Observer {
                         if (it != null) {
                             progressBar.visibility = View.GONE
-                            //TODO load teams recycler
+                            val adapter = recyclerView.adapter as TeamRecylerAdapter
+                            adapter.teams = it
+                            adapter.notifyDataSetChanged()
                         } else {
                             //TODO no data
                         }
@@ -52,6 +60,7 @@ class TeamFragment : Fragment() {
                     toast("No network").show()
                 }
             })
+
 
 
         }

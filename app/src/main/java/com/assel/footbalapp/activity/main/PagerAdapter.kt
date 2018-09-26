@@ -2,6 +2,8 @@ package com.assel.footbalapp.activity.main
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.assel.footbalapp.activity.main.schedule.ScheduleFragment
+import com.assel.footbalapp.activity.main.team.TeamFragment
 
 class PagerAdapter(fragmentManager: FragmentManager, private val tabCount: Int): FragmentStatePagerAdapter(fragmentManager) {
 
