@@ -2,6 +2,7 @@ package com.assel.footbalapp.restApi
 
 import com.assel.footbalapp.model.Events
 import com.assel.footbalapp.model.Leagues
+import com.assel.footbalapp.model.Players
 import com.assel.footbalapp.model.Teams
 import retrofit2.Call
 import retrofit2.http.GET
@@ -27,5 +28,8 @@ interface Endpoint {
 
     @GET("lookup_all_teams.php")
     fun getTeamsByLeagueId(@Query("id") id:Int): Call<Teams>
+
+    @GET("lookup_all_players.php")
+    fun getPlayersByTeamId(@Query("id") id:Int): Call<Players>
 
 }

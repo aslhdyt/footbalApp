@@ -26,12 +26,12 @@ class ScheduleRecyclerAdapter(var events: List<Event>, val onItemClick: (Event)-
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
         fun bind(pos: Int) {
             val event = events[pos]
-            if (pos % 2 == 0)
-                itemView.backgroundColor = ContextCompat.getColor(itemView.context, R.color.grey_200)
-            else
-                itemView.backgroundColor = ContextCompat.getColor(itemView.context, R.color.white)
-            itemView.setOnClickListener { onItemClick(event) }
             itemView.apply {
+                backgroundColor = if (pos % 2 == 0)
+                    ContextCompat.getColor(context, R.color.grey_200)
+                else
+                    ContextCompat.getColor(context, R.color.white)
+                setOnClickListener { onItemClick(event) }
                 tvTitle.text = event.strEvent
                 tvTeamHome.text = event.strHomeTeam
                 tvTeamAway.text = event.strAwayTeam
