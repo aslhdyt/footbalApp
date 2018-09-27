@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".activity.scheduleDetail.ScheduleDetailActivity" />
         <activity android:name=".activity.search.SearchActivity" />
-        <activity android:name=".activity.teamDetail.TeamDetailActivity"></activity>
+        <activity android:name=".activity.teamDetail.TeamDetailActivity" />
+        <activity android:name=".activity.player.PlayerDetailActivity"></activity>
     </application>
 
 </manifest>

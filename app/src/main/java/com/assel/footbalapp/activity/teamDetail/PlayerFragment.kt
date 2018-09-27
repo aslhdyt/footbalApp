@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
+import com.assel.footbalapp.activity.player.PlayerDetailActivity
 import kotlinx.android.synthetic.main.team_layout.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 /**
@@ -36,15 +39,15 @@ class PlayerFragment : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MyPlayerRecyclerViewAdapter(listOf()) {
-                    toast("name: ${it.strPlayer}").show()
+                adapter = PlayerRecyclerAdapter(listOf()) {
+                    startActivity<PlayerDetailActivity>(AppConstant.EXTRA_PLAYER to it)
                 }
             }
         }
 
         viewModel.playersData.observe(this, Observer {
             if (it != null) {
-                val adapter = recyclerView.adapter as MyPlayerRecyclerViewAdapter
+                val adapter = recyclerView.adapter as PlayerRecyclerAdapter
                 adapter.playerList = it
                 adapter.notifyDataSetChanged()
             } else {

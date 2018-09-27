@@ -14,10 +14,10 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_player.view.*
 import org.jetbrains.anko.backgroundColor
 
-class MyPlayerRecyclerViewAdapter(
+class PlayerRecyclerAdapter(
         var playerList: List<Player>,
         private val callback: (player: Player)->Unit)
-    : RecyclerView.Adapter<MyPlayerRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<PlayerRecyclerAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,6 +35,7 @@ class MyPlayerRecyclerViewAdapter(
                 ContextCompat.getColor(context, R.color.white)
 
             tvPlayerName.text = item.strPlayer
+            tvPosition.text = item.strPosition
             Picasso.get().load(item.strCutout).into(ivPhoto)
 
             setOnClickListener{callback(item)}
