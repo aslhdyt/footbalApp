@@ -15,7 +15,7 @@ class ScheduleDetailViewModel(intent: Intent, application: Application): Android
     val event = intent.getParcelableExtra<Event>(AppConstant.EXTRA_EVENT)
     val homeTeam = TeamDetailLD(application as App, event.idHomeTeam ?: -1)
     val awayTeam = TeamDetailLD(application as App, event.idAwayTeam ?: -1)
-    val isFavourite = db.selectEventById(event.idEvent?.toInt() ?: 0)
+    val isFavourite = db.selectEventById(event.idEvent.toInt())
 
     fun toggleFavourite(callback: (isAdded:Boolean) -> Unit) {
         val favEvent = isFavourite.value
@@ -24,7 +24,7 @@ class ScheduleDetailViewModel(intent: Intent, application: Application): Android
                 db.insertEvent(event)
                 callback(true)
             } else {
-                db.deleteEventById(favEvent.idEvent?.toInt()?: 0)
+                db.deleteEventById(favEvent.idEvent.toInt() ?: 0)
                 callback(false)
             }
         }

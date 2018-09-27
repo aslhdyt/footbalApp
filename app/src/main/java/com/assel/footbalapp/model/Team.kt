@@ -1,12 +1,17 @@
 package com.assel.footbalapp.model
 
+import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity
 data class Team(
-        @SerializedName("idTeam") val idTeam: String?,
+        @PrimaryKey
+        @SerializedName("idTeam") val idTeam: String,
         @SerializedName("idSoccerXML") val idSoccerXML: String?,
         @SerializedName("intLoved") val intLoved: String?,
         @SerializedName("strTeam") val strTeam: String?,
@@ -55,5 +60,7 @@ data class Team(
         @SerializedName("strTeamFanart4") val strTeamFanart4: String?,
         @SerializedName("strTeamBanner") val strTeamBanner: String?,
         @SerializedName("strYoutube") val strYoutube: String?,
-        @SerializedName("strLocked") val strLocked: String?
+        @SerializedName("strLocked") val strLocked: String?,
+
+        @SerializedName("players") var players: List<Player>?
 ): Parcelable

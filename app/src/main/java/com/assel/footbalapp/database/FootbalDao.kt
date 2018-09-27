@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.assel.footbalapp.model.Event
+import com.assel.footbalapp.model.Team
 
 @Dao
 interface FootbalDao {
@@ -21,6 +22,13 @@ interface FootbalDao {
     @Query("SELECT * FROM Event WHERE idEvent = :idEvent")
     fun selectEventById(idEvent: Int) : LiveData<Event?>
 
+    @Query("SELECT * FROM Team WHERE idTeam = :idTeam")
+    fun selectTeamById(idTeam: Int) : LiveData<Team?>
 
+    @Insert
+    fun insertTeam(team: Team)
+
+    @Query("DELETE from Team WHERE idTeam = :idTeam")
+    fun deleteTeamById(idTeam: Int)
 
 }
