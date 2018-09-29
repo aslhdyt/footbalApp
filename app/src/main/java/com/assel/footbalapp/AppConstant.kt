@@ -20,9 +20,3 @@ object AppConstant {
     const val TYPE_DB_EVENT = 2
     const val TYPE_DB_TEAM = 3
 }
-
-
-val Application.idlingResource: CountingIdlingResource
-    get() {return (this as App).idlingResource}
-
-
