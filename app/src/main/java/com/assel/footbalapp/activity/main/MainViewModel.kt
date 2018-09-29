@@ -30,4 +30,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     val favouriteEvent = db.selectAllEvent()
+
+    val favouriteTeam = db.selectAllTeam()
 }

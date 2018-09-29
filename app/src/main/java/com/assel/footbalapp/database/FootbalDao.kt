@@ -31,4 +31,7 @@ interface FootbalDao {
     @Query("DELETE from Team WHERE idTeam = :idTeam")
     fun deleteTeamById(idTeam: Int)
 
+    @Query("SELECT * FROM Team")
+    fun selectAllTeam(): LiveData<List<Team>>
+
 }

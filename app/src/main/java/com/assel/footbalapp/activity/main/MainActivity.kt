@@ -9,6 +9,7 @@ import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.onPageChangeListener
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,18 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         pager.adapter = PagerAdapter(supportFragmentManager, 3)
+
+        pager.onPageChangeListener {
+            onPageSelected {
+                bnv.selectedItemId = when (it) {
+                    0 -> R.id.action_schedule
+                    1 -> R.id.action_team
+                    2 -> R.id.action_favourite
+                    else -> throw IllegalStateException("unregisted page")
+                }
+            }
+        }
+
 
         bnv.setOnNavigationItemSelectedListener {
             pager.currentItem = when (it.itemId) {
