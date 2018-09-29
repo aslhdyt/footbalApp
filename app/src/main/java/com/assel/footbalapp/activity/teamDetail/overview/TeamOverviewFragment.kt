@@ -1,4 +1,4 @@
-package com.assel.footbalapp.activity.teamDetail
+package com.assel.footbalapp.activity.teamDetail.overview
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

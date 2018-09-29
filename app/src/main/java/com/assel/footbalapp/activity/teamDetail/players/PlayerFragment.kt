@@ -1,4 +1,4 @@
-package com.assel.footbalapp.activity.teamDetail
+package com.assel.footbalapp.activity.teamDetail.players
 
 import android.arch.lifecycle.Observer
 import android.content.Context
@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.player.PlayerDetailActivity
+import com.assel.footbalapp.activity.teamDetail.TeamDetailActivity
+import com.assel.footbalapp.activity.teamDetail.TeamDetailViewModel
 import kotlinx.android.synthetic.main.team_layout.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
