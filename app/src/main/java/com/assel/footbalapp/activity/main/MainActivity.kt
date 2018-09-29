@@ -11,7 +11,9 @@ import android.view.View
 import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.main.schedule.ScheduleRecyclerAdapter
+import com.assel.footbalapp.activity.main.team.TeamRecylerAdapter
 import com.assel.footbalapp.activity.scheduleDetail.ScheduleDetailActivity
+import com.assel.footbalapp.activity.teamDetail.TeamDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.onPageChangeListener
@@ -81,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                             rvSearch.adapter = ScheduleRecyclerAdapter(listOf()) {
                                 startActivity<ScheduleDetailActivity>(AppConstant.EXTRA_EVENT to it)
                             }
+                            viewModel.searchTeam.removeObservers(this@MainActivity)
                             viewModel.searchEvent.observe(this@MainActivity, Observer { events ->
                                 (rvSearch.adapter as ScheduleRecyclerAdapter).events = events ?: listOf()
                                 rvSearch.adapter.notifyDataSetChanged()
@@ -88,7 +91,15 @@ class MainActivity : AppCompatActivity() {
                             })
                         }
                         R.id.action_team -> {
+                            rvSearch.adapter = TeamRecylerAdapter(listOf()) {
+                                startActivity<TeamDetailActivity>(AppConstant.EXTRA_TEAM to it)
+                            }
                             viewModel.searchEvent.removeObservers(this@MainActivity)
+                            viewModel.searchTeam.observe(this@MainActivity, Observer { teams ->
+                                (rvSearch.adapter as TeamRecylerAdapter).teams = teams ?: listOf()
+                                rvSearch.adapter.notifyDataSetChanged()
+                                pbSearch.visibility = View.GONE
+                            })
                         }
                     }
                 }

@@ -7,10 +7,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import com.assel.footbalapp.App
 import com.assel.footbalapp.database.FootballDatabase
-import com.assel.footbalapp.liveData.LeagueEventLD
-import com.assel.footbalapp.liveData.LeagueLD
-import com.assel.footbalapp.liveData.LeagueTeamLD
-import com.assel.footbalapp.liveData.SearchEventLD
+import com.assel.footbalapp.liveData.*
 import com.assel.footbalapp.model.Event
 import com.assel.footbalapp.model.Team
 
@@ -39,10 +36,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         if (!it.isNullOrBlank())SearchEventLD(application, it)
         else MutableLiveData<List<Event>>()
     }
-
-    //TODO
-//    val searchTeam = Transformations.switchMap<String, List<Team>>(searchQuery) {
-//        if (!it.isNullOrBlank())SearchTeamLD(application, it)
-//        else MutableLiveData<List<Team>>()
-//    }
+    val searchTeam = Transformations.switchMap<String, List<Team>>(searchQuery) {
+        if (!it.isNullOrBlank()) SearchTeamLD(application, it)
+        else MutableLiveData<List<Team>>()
+    }
 }
