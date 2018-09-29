@@ -10,6 +10,7 @@ import com.assel.footbalapp.liveData.PlayersLD
 import com.assel.footbalapp.model.Player
 import com.assel.footbalapp.model.Team
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class TeamDetailViewModel(intent: Intent, application: Application): AndroidViewModel(application) {
     val db = FootballDatabase.getInstance(application).dao()
@@ -34,10 +35,11 @@ class TeamDetailViewModel(intent: Intent, application: Application): AndroidView
         doAsync {
             if (favTeam == null) {
                 db.insertTeam(team)
-                callback(true)
+                uiThread { callback(true) }
+
             } else {
                 db.deleteTeamById(favTeam.idTeam.toInt())
-                callback(false)
+                uiThread { callback(false) }
             }
         }
 
