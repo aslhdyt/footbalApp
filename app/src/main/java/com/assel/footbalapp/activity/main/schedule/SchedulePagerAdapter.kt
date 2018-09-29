@@ -2,6 +2,7 @@ package com.assel.footbalapp.activity.main.schedule
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.assel.footbalapp.customView.RecyclerFragment
 
 class SchedulePagerAdapter(fragmentManager: FragmentManager, private val tabCount: Int): FragmentStatePagerAdapter(fragmentManager) {
 

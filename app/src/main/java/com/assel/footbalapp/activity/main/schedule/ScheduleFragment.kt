@@ -10,9 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.assel.footbalapp.AppConstant
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.main.MainActivity
 import com.assel.footbalapp.activity.main.MainViewModel
+import com.assel.footbalapp.customView.RecyclerFragment
 import com.assel.footbalapp.model.League
 import kotlinx.android.synthetic.main.tab_layout.view.*
 import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
@@ -71,6 +73,4 @@ class ScheduleFragment: Fragment() {
             })
         }
     }
-
-
 }
