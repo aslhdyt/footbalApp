@@ -1,12 +1,8 @@
 package com.assel.footbalapp.liveData
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
-import com.assel.footbalapp.App
 import com.assel.footbalapp.model.Team
 import com.assel.footbalapp.model.Teams
-import com.assel.footbalapp.restApi.Endpoint
-import com.assel.footbalapp.restApi.RestClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
