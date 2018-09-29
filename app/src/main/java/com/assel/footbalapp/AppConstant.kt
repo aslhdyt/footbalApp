@@ -1,5 +1,8 @@
 package com.assel.footbalapp
 
+import android.app.Application
+import android.support.test.espresso.idling.CountingIdlingResource
+
 object AppConstant {
 
     const val EXTRA_EVENT = "event_extra"
@@ -16,5 +19,10 @@ object AppConstant {
     const val TYPE_NEXT_EVENT = 1
     const val TYPE_DB_EVENT = 2
     const val TYPE_DB_TEAM = 3
-
 }
+
+
+val Application.idlingResource: CountingIdlingResource
+    get() {return (this as App).idlingResource}
+
+

@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Transaction
 import com.assel.footbalapp.model.Event
 import com.assel.footbalapp.model.Team
 
@@ -33,5 +34,11 @@ interface FootbalDao {
 
     @Query("SELECT * FROM Team")
     fun selectAllTeam(): LiveData<List<Team>>
+
+    @Query("DELETE from Team")
+    fun deleteAllTeam()
+    @Query("DELETE from Event")
+    fun deleteAllEvent()
+
 
 }

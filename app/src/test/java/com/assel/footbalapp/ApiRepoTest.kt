@@ -12,12 +12,13 @@ class ApiRepoTest {
 
     @Before
     fun setUp() {
+
     }
     @Test
     fun testGetEventAndTeam() {
         val callEvents = {
-            if (Random().nextBoolean()) client.nextEventLeague()
-            else client.lastEventLeague()
+            if (Random().nextBoolean()) client.nextEventLeague(4328)
+            else client.lastEventLeague(4328)
         } ()
         val eventResult = callEvents.execute().body()?.events
 

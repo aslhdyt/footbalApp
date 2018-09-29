@@ -6,9 +6,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.assel.footbalapp.App
-import com.assel.footbalapp.AppConstant
-import com.assel.footbalapp.IntentVmFactory
+import com.assel.footbalapp.*
 import com.assel.footbalapp.R
 import com.assel.footbalapp.activity.teamDetail.TeamDetailActivity
 import com.squareup.picasso.Picasso
@@ -69,7 +67,7 @@ class ScheduleDetailActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.favourite -> {
-                (application as App).idlingResource.increment()
+                application.idlingResource.increment()
                 viewModel.toggleFavourite {
                     if (it) {
                         toast("Added to favourite").show()
@@ -83,5 +81,5 @@ class ScheduleDetailActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }
+

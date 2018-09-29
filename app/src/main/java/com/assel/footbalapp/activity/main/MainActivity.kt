@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
                     toggleSearch(false)
+                    viewModel.searchTeam.removeObservers(this@MainActivity)
+                    viewModel.searchEvent.removeObservers(this@MainActivity)
                 } else {
                     toggleSearch(true)
                     when(bnv.selectedItemId) {

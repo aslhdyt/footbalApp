@@ -15,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.assel.footbalapp.activity.main.MainActivity
 import com.assel.footbalapp.activity.main.schedule.ScheduleRecyclerAdapter
-import com.assel.footbalapp.database.database
+import com.assel.footbalapp.database.FootballDatabase
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
@@ -38,9 +38,9 @@ class FavouriteTest {
     @Before
     fun registerIdlingResource() {
         //start with empty database
-        mActivityTestRule.activity.database.use {
-            delete(DatabaseConst.TABLE_FAVOURITE)
-        }
+        val db = FootballDatabase.getInstance(mActivityTestRule.activity).dao()
+        db.deleteAllTeam()
+        db.deleteAllEvent()
         val mainIdling = (mActivityTestRule.activity.application as App).idlingResource
         IdlingRegistry.getInstance().register(mainIdling)
     }

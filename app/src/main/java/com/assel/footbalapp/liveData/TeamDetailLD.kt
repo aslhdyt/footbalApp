@@ -1,30 +1,26 @@
 package com.assel.footbalapp.liveData
 
-import android.arch.lifecycle.LiveData
+import android.app.Application
 import com.assel.footbalapp.App
 import com.assel.footbalapp.model.Team
 import com.assel.footbalapp.model.Teams
-import com.assel.footbalapp.restApi.Endpoint
-import com.assel.footbalapp.restApi.RestClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TeamDetailLD(val application: App, id:Int): LiveData<Team>() {
-    private val call = RestClient.getInstance()
-            .create(Endpoint::class.java).getTeamDetailsById(id)
+
+class TeamDetailLD(application: Application, id:Int): AppLiveData<Team>(application as App) {
+    override val call = client.getTeamDetailsById(id)
     override fun onActive() {
-        application.idlingResource.increment()
+        super.onActive()
         if (!call.isExecuted) call.enqueue(object: Callback<Teams> {
             override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
                 value = response.body()?.teams?.get(0)
-                application.idlingResource.decrement()
             }
 
             override fun onFailure(call: Call<Teams>, t: Throwable) {
                 t.printStackTrace()
                 value = null
-                application.idlingResource.decrement()
             }
         })
     }
