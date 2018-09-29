@@ -9,6 +9,7 @@ import com.assel.footbalapp.database.FootballDatabase
 import com.assel.footbalapp.liveData.TeamDetailLD
 import com.assel.footbalapp.model.Event
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class ScheduleDetailViewModel(intent: Intent, application: Application): AndroidViewModel(application) {
     val db = FootballDatabase.getInstance(application).dao()
@@ -22,10 +23,10 @@ class ScheduleDetailViewModel(intent: Intent, application: Application): Android
         doAsync {
             if (favEvent == null) {
                 db.insertEvent(event)
-                callback(true)
+                uiThread { callback(true) }
             } else {
-                db.deleteEventById(favEvent.idEvent.toInt() ?: 0)
-                callback(false)
+                db.deleteEventById(favEvent.idEvent.toInt())
+                uiThread { callback(false) }
             }
         }
 

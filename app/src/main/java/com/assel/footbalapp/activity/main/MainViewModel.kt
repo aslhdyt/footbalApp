@@ -2,6 +2,7 @@ package com.assel.footbalapp.activity.main
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import com.assel.footbalapp.App
@@ -9,6 +10,7 @@ import com.assel.footbalapp.database.FootballDatabase
 import com.assel.footbalapp.liveData.LeagueEventLD
 import com.assel.footbalapp.liveData.LeagueLD
 import com.assel.footbalapp.liveData.LeagueTeamLD
+import com.assel.footbalapp.liveData.SearchEventLD
 import com.assel.footbalapp.model.Event
 import com.assel.footbalapp.model.Team
 
@@ -30,6 +32,17 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     val favouriteEvent = db.selectAllEvent()
-
     val favouriteTeam = db.selectAllTeam()
+
+    val searchQuery = MutableLiveData<String>()
+    val searchEvent = Transformations.switchMap<String, List<Event>>(searchQuery) {
+        if (!it.isNullOrBlank())SearchEventLD(application, it)
+        else MutableLiveData<List<Event>>()
+    }
+
+    //TODO
+//    val searchTeam = Transformations.switchMap<String, List<Team>>(searchQuery) {
+//        if (!it.isNullOrBlank())SearchTeamLD(application, it)
+//        else MutableLiveData<List<Team>>()
+//    }
 }

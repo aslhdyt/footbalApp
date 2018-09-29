@@ -32,4 +32,10 @@ interface Endpoint {
     @GET("lookup_all_players.php")
     fun getPlayersByTeamId(@Query("id") id:Int): Call<Players>
 
+    @GET("searchteams.php")
+    fun searchTeamByName(@Query("t") t: String): Call<Teams>
+
+    @GET("searchevents.php")
+    fun searchEventByName(@Query("e") e: String): Call<Events>
+
 }
